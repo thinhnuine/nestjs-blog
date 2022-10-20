@@ -11,10 +11,25 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now()) @map("create_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  blogs     Blog[]
+
+  @@map("user")
+}
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  publishedAt DateTime @default(now()) @map("published_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  author      User?    @relation(fields: [authorId], references: [id])
+  authorId    String   @map("author_id")
+
+  @@map("blog")
 }
