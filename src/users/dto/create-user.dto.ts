@@ -14,7 +14,7 @@ export class CreateUserDto {
   @IsString()
   @MinLength(5, {
     message:
-      'Title is too short. Minimal length is $constraint1 characters, but actual is $value',
+      'Password is too short. Minimal length is $constraint1 characters',
   })
   password: string;
 }
