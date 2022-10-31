@@ -8,8 +8,9 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { JwtGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { Me } from './me.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -22,9 +23,9 @@ export class AuthController {
   }
 
   @Get('profile')
-  @UseGuards(JwtAuthGuard)
-  profile(@Request() req) {
-    return req.user;
+  @UseGuards(JwtGuard)
+  profile(@Me() me) {
+    return me
   }
 
   @Post('register')
