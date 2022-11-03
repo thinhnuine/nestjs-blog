@@ -11,12 +11,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
-  email     String   @unique
+  email     String    @unique
   password  String
-  createdAt DateTime @default(now()) @map("create_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  role      Role?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
   blogs     Blog[]
 
   @@map("user")
@@ -28,8 +30,14 @@ model Blog {
   content     String
   publishedAt DateTime @default(now()) @map("published_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
+  isPublished Boolean  @default(true) @map("is_publised_at")
   author      User?    @relation(fields: [authorId], references: [id])
   authorId    String   @map("author_id")
 
   @@map("blog")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
