@@ -7,6 +7,8 @@ import { LocalStrategy } from "./strategy.ts/local.strategy"
 import { JwtModule } from "@nestjs/jwt"
 import { jwt } from "./constants"
 import { JwtStrategy } from "./strategy.ts/jwt.strategy"
+import { APP_GUARD } from "@nestjs/core"
+import { RolesGuard } from "./guards/roles.guard"
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import { JwtStrategy } from "./strategy.ts/jwt.strategy"
     UsersModule,
     JwtModule.register({
       secret: jwt.secretKey,
-      signOptions: { expiresIn: "false" },
+      signOptions: { expiresIn: "10h" },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
