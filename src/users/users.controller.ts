@@ -3,10 +3,21 @@ import { UsersService } from "./users.service"
 import { UpdateUserDto } from "./dto/update-user.dto"
 import { JwtGuard } from "src/auth/guards/jwt-auth.guard"
 import { ListQueryUser } from "./dto/list-query.dto"
+import { CreateUserDto } from "./dto/create-user.dto"
+import { Roles } from "src/auth/decorator/roles.decorator"
+import { Role } from "@prisma/client"
+import { RolesGuard } from "src/auth/guards/roles.guard"
 
 @Controller("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Post()
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtGuard, RolesGuard)
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto)
+  }
 
   @Get()
   @UseGuards(JwtGuard)
