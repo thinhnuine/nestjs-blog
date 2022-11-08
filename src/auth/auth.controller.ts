@@ -3,7 +3,7 @@ import { CreateUserDto } from "src/users/dto/create-user.dto"
 import { AuthService } from "./auth.service"
 import { JwtGuard } from "./guards/jwt-auth.guard"
 import { LocalAuthGuard } from "./guards/local-auth.guard"
-import { Me } from "./me.decorator"
+import { Me } from "./decorator/me.decorator"
 
 @Controller("auth")
 export class AuthController {
